@@ -78,11 +78,11 @@ export default function Notes() {
 
     return(
         <div className={classes.main}>
-            <Tooltip title="Add" aria-label="add">
+            {/*<Tooltip title="Add" aria-label="add">
                 <Fab color="primary" className="" onClick={ handleAdd }>
                     <AddIcon />
                 </Fab>
-            </Tooltip>
+            </Tooltip>*/}
             {
             notesList.map( (item) => {
                 return(

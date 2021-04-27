@@ -3,11 +3,13 @@ import Login from './Components/Login';
 import { Route, Switch } from 'react-router-dom';
 import Notes from './Pages/Notes';
 import Note from './Components/Note'
+import Header from './Components/Header';
 
 function App() {
   return (
-
-    <Switch>
+    <div>
+      <Header />
+      <Switch>
         <Route path="/" exact>
             <Login />
         </Route>
@@ -23,7 +25,9 @@ function App() {
         <Route path = "/edit-note" exact>
           <Note from = {'editNote'} />
         </Route>
-    </Switch>
+      </Switch>
+    </div>
+    
     
   );
 }
