@@ -4,6 +4,8 @@ import { Route, Switch } from 'react-router-dom';
 import Notes from './Pages/Notes';
 import Note from './Components/Note'
 import Header from './Components/Header';
+import AllNotes from './AllNotes';
+import { store } from './store';
 
 function App() {
   return (
@@ -14,7 +16,8 @@ function App() {
             <Login />
         </Route>
         <Route path="/notes" exact>
-          <Notes />
+          {/*<Notes />*/}
+          <AllNotes />
         </Route>
         <Route path="/notes/:noteId" exact>
           <Note from = {'displayNote'} />

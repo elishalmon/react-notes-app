@@ -18,8 +18,26 @@ export default function Note({ from }) {
     const history = useHistory()
 
     const location = useLocation()
-    const { id, title, body, color, user} = location.state.note
-
+    if(from === "addNote"){
+        var { title, body, color, user} = {
+            title: '',
+            body: '',
+            color: 'white',
+            user: {
+                email: 'string',
+                id: 41,
+                name: 'string',
+                notes: [
+                null
+                ],
+                password: 'string'
+            }
+        }
+    }
+    else {
+        var { id, title, body, color, user} = location.state.note
+    }
+    
     const [ values, setValues ] = useState({
         id: id,
         title: title,

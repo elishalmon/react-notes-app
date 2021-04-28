@@ -11,6 +11,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Title from '../Components/Title';
 import Box from '@material-ui/core/Box';
+import MaterialUiIconPicker from 'react-material-ui-icon-picker';
 
 export default function Notes() {
 
@@ -76,6 +77,10 @@ export default function Notes() {
         []
     )
 
+    const showPickedIcon = (icon) => {
+        console.log(icon)
+    }
+
     return(
         <div className={classes.main}>
             {/*<Tooltip title="Add" aria-label="add">
@@ -108,6 +113,7 @@ export default function Notes() {
                 )
             })
         }
+            {/*<MaterialUiIconPicker onPick={(icon) => showPickedIcon(icon)} />*/}
         </div>
     )
 }

@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import headerStyle from '../Styles/headerStyle';
 import { useHistory } from 'react-router-dom'; 
-
+import {Link} from 'react-router-dom';
 
 
 export default function Header() {
@@ -40,19 +40,19 @@ export default function Header() {
         <AppBar position="static">
             <Toolbar className={classes.main}>
                 <div>
-                    <Button  color="inherit" className = {classes.button} onClick={()=> history.push("/notes")}>
+                    <Button color="inherit" className = {classes.button} onClick={()=> history.push("/notes")}>
                         <Typography variant="h6" >
                             Home
                         </Typography>
                     </Button>
-                    <Button  color="inherit" className = {classes.button} onClick={handleAdd}>
+                    <Button color="inherit" className = {classes.button} onClick={()=> history.push("/add-note")}>
                         <Typography variant="h6" >
                             Add Note
                         </Typography>
                     </Button>
-                    <Button  color="inherit" className = {classes.button}>
+                    <Button color="inherit" className = {classes.button}>
                         <Typography variant="h6" >
-                            About Me
+                            About
                         </Typography>
                     </Button>
                 </div> 
