@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import headerStyle from '../Styles/headerStyle';
 import { useHistory } from 'react-router-dom'; 
-import {Link} from 'react-router-dom';
 
 
 export default function Header() {
@@ -13,27 +12,6 @@ export default function Header() {
     const classes = headerStyle();
 
     const history = useHistory()
-
-    const handleAdd = () => {
-        history.push({
-            pathname: '/add-note',
-            state: {
-                note: {
-                    title: '',
-                    body: '',
-                    color: 'white',
-                    user: {
-                        email: 'string',
-                        id: 41,
-                        name: 'string',
-                        notes: [
-                        null
-                        ],
-                        password: 'string'
-                    } 
-              }}
-        })
-    }
 
     return (
         <div className={classes.root}>
@@ -45,7 +23,7 @@ export default function Header() {
                             Home
                         </Typography>
                     </Button>
-                    <Button color="inherit" className = {classes.button} onClick={()=> history.push("/add-note")}>
+                    <Button color="inherit" className = {classes.button} onClick={()=> history.push("/notes/add-note")}>
                         <Typography variant="h6" >
                             Add Note
                         </Typography>
@@ -56,7 +34,13 @@ export default function Header() {
                         </Typography>
                     </Button>
                 </div> 
-                <Button color="inherit" className={classes.button}>Logout</Button>
+                <Button 
+                    color="inherit" 
+                    className={classes.button}
+                    onClick={()=> history.push('/logout')}
+                >
+                    Logout
+                </Button>
             </Toolbar>
         </AppBar>
         </div>

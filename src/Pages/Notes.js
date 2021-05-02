@@ -6,24 +6,19 @@ import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import Typography from '@material-ui/core/Typography';
 import notesStyle from '../Styles/notesStyle';
-import Tooltip from '@material-ui/core/Tooltip';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import Title from '../Components/Title';
 import Box from '@material-ui/core/Box';
-import MaterialUiIconPicker from 'react-material-ui-icon-picker';
+import StarsRating from '../Components/StarsRating';
 
 export default function Notes() {
 
     const [ notesList, setNotesList ] = useState([])
-
     const classes = notesStyle()
-
+    const userId = JSON.parse(localStorage.getItem('user')).id
     const history = useHistory()
 
     const loadNotes = async () => {
         const response = await fetch(
-            `http://localhost:8080/user/getNotes?id=${41}`,
+            `http://localhost:8080/user/getNotes?id=${userId}`,
             {
                 method: 'GET',
                 headers: {
@@ -35,14 +30,26 @@ export default function Notes() {
         setNotesList(data)
     }
 
-    const handleClick = (item) => {
-        history.push({
-            pathname: `notes/${item.id}`,
-            state: { note: item }
-        })
+    const handleUpdateReadFlag = async (note) => {
+        await fetch(
+            'http://localhost:8080/notes/updateNote',
+            {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(note),
+            }
+        )
+    }
+
+    const handleClick = (note) => {
+        if(note.read === false) {
+            note = { ...note, read: true }
+            handleUpdateReadFlag(note)
+        }
+        localStorage.setItem('note', JSON.stringify(note))
+        history.push(`/notes/view/${note.id}`)
     }
     
-
     const handleDelete = async (item) => {
         await fetch(`http://localhost:8080/notes/deleteNote/${item.id}`, 
         {
@@ -51,70 +58,68 @@ export default function Notes() {
         loadNotes()
     }
 
-    const handleAdd = () => {
-        history.push({
-            pathname: '/add-note',
-            state: {
-                note: {
-                    title: '',
-                    body: '',
-                    color: 'white',
-                    user: {
-                        email: 'string',
-                        id: 41,
-                        name: 'string',
-                        notes: [
-                        null
-                        ],
-                        password: 'string'
-                    } 
-              }}
-        })
-    }
-
     useEffect(
         loadNotes,
         []
     )
 
-    const showPickedIcon = (icon) => {
-        console.log(icon)
-    }
-
     return(
-        <div className={classes.main}>
-            {/*<Tooltip title="Add" aria-label="add">
-                <Fab color="primary" className="" onClick={ handleAdd }>
-                    <AddIcon />
-                </Fab>
-            </Tooltip>*/}
+            <div className={classes.main}>
             {
-            notesList.map( (item) => {
+                notesList.length !== 0 ?
+            
+                notesList.map( (item) => {
                 return(
-                    <Paper className={classes.item} elevation={9} style={{borderColor: item.color}}>
-                            <Button className={classes.button} fullWidth onClick={ () => handleClick(item) }>
+                    <Paper 
+                        className={classes.item} 
+                        elevation={9} 
+                        style={{borderColor: item.color}}
+                    >
+                        <Button
+                            className={classes.button} 
+                            fullWidth 
+                            onClick={ () => handleClick(item) }>
+                            <div className={classes.top}>
                                 <Typography >
                                     <Box
-                                        fontWeight={1000}
+                                        fontWeight={ item.read ? 100 : 1000 }
                                         fontSize={20}
                                         fontStyle="normal"
-                                        fontFamily="Monospace"
+                                        fontFamily="sans-serif"
                                         letterSpacing={3}
                                     >
                                         {item.title}
                                     </Box>
                                 </Typography>
-                            </Button>
-                            <IconButton className={classes.delete}  aria-label="delete" onClick = { () => handleDelete(item) }>
+                                <StarsRating 
+                                    className={classes.stars}
+                                    readOnly={true} 
+                                    startValue={item.priority} 
+                                    size={''}
+                                />
+                            </div>
+                        </Button>
+                        <div className={classes.buttom}>
+                            <div className={classes.icon}>
+                                <i class={item.icon}></i>
+                            </div>
+                            <IconButton 
+                                className={classes.delete}  
+                                aria-label="delete" 
+                                onClick = { () => handleDelete(item) }
+                            >
                                 <DeleteIcon />
                             </IconButton>
-                            
-                        </Paper>
-                )
-            })
-        }
-            {/*<MaterialUiIconPicker onPick={(icon) => showPickedIcon(icon)} />*/}
-        </div>
+                        </div>
+                    </Paper>
+                    )
+                })
+                :
+                <Typography variant='h1'>
+                     You have to add notes!
+                </Typography>    
+            }
+            </div>
     )
 }
                

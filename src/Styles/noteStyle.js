@@ -1,14 +1,25 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 
-const addNoteStyle = makeStyles((theme) => ({
+const noteStyle = makeStyles((theme) => ({
     paper: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         marginTop: theme.spacing(5),
-        border: "solid 15px",
+        border: "solid 11px",
         borderRadius: '5%',
+        backgroundColor: '#ededf5',
+    },
+    top: {
+        display: 'flex',
+        width: '100%',
+        margin: theme.spacing(3,2,-2,2),
+        justifyContent: 'space-around',
+    },
+    rating: {
+        display: 'flex',
+        alignSelf: 'center',
     },
     form: {
         display: 'flex',
@@ -33,4 +44,4 @@ const addNoteStyle = makeStyles((theme) => ({
     },
 }));
 
-export default addNoteStyle;
+export default noteStyle;

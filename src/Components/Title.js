@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField';
  
 
-export default function Title({ handleChange, label, readOnly, style, defaultValue }) {
+export default function Title({ handleChange=null, label, readOnly, style, defaultValue }) {
     return(
         <TextField
             className = { style }
@@ -9,6 +9,7 @@ export default function Title({ handleChange, label, readOnly, style, defaultVal
             label = {label}
             variant = "outlined"
             name = "title"
+            required
             defaultValue = { defaultValue }
             onChange = { handleChange }
             InputProps = {{

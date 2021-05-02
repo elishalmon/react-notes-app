@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router';
 import Paper from '@material-ui/core/Paper';
-import addNoteStyle from '../Styles/addNoteStyle';
+import noteStyle from '../Styles/noteStyle';
 import Container from '@material-ui/core/Container';
 import ColorPicker from './ColorPicker';
 import Title from './Title';
@@ -13,7 +13,7 @@ import { useLocation } from 'react-router-dom';
 
 export default function Note({ from }) {
 
-    const classes = addNoteStyle()
+    const classes = noteStyle()
 
     const history = useHistory()
 

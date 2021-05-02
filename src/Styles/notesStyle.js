@@ -12,19 +12,29 @@ const notesStyle = makeStyles((theme) => ({
     item: {
         width: '30%',
         margin: theme.spacing(3, 2),
-        border: 'solid 3px',
+        border: 'solid 4px',
         borderRadius: '10%',
-        display: 'flex'
+        display: 'flex',
+    },
+    top: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'space-around'
+    },
+    buttom: {
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    icon: {
+        margin: theme.spacing(1)
     },
     button: {
-       
-
+        height: '100%',
     },
-    delete: {
-       
-    },
-    title: {
-        display: 'flex',
+    stars: {
+        alignSelf: 'center'
     }
 }));
 
