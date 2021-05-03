@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router';
 import Paper from '@material-ui/core/Paper';
@@ -10,6 +10,7 @@ import Body from '../Components/Body';
 import SaveIcon from '@material-ui/icons/Save';
 import StarsRating from '../Components/StarsRating';
 import IconPicker from '../Components/IconPicker';
+import { useSelector } from 'react-redux';
 
 var isChanged = false;
 
@@ -37,36 +38,24 @@ export default function EditNote() {
         history.push("/notes")
     }
 
-    const handleChange = (event) => {
-        event.preventDefault()
-        isChanged = true
+    const handleChange = (event = null, nameAndValue) => {
+        isChanged = true;
+        let name = '';
+        let value = '';
+        if(event !== null){
+            event.preventDefault()
+            name = event.target.name;
+            value = event.target.value;
+        }
+        else {
+            name = nameAndValue[0];
+            value = nameAndValue[1]
+        }
         setValues({
             ...values,
-            [event.target.name]: event.target.value
+            [name]: value
         });
-    }
-
-    const handleColorChange = (color) => {
-        isChanged = true
-        setValues({
-            ...values,
-            'color': color.hex
-        })
-    }
-
-    const handleRatingChange = (priority) => {
-        isChanged = true
-        setValues({
-            ...values,
-            'priority': priority
-        })
-    } 
-
-    const handleIconChange = (icon) => {
-        setValues({
-            ...values,
-            'icon': icon
-        })
+        console.log(values)
     }
 
     return(
@@ -82,13 +71,13 @@ export default function EditNote() {
                         <StarsRating 
                             startValue = {values.priority} 
                             readOnly={false}
-                            handleChange = {handleRatingChange}
+                            handleChange = {handleChange}
                         />
                     </div>
                     <div >
                         <IconPicker 
                             startValue={values.icon}
-                            handleChange={handleIconChange}
+                            handleChange={handleChange}
                         />
                     </div>
                 </div>
@@ -109,10 +98,10 @@ export default function EditNote() {
                     />
                     
                     <div className={classes.colorPicker}>
-                        <ColorPicker handleChange = {handleColorChange}/>
+                        <ColorPicker handleChange = {handleChange}/>
                     </div>
                     <div 
-                        className={classes.button} 
+                        className={classes.buttom} 
                         style={{display: 'flex', alignSelf: 'center'}}
                     >
                         <Button
@@ -131,3 +120,27 @@ export default function EditNote() {
         </Container>
     )
 }
+
+/* const handleColorChange = (color) => {
+    isChanged = true
+    setValues({
+        ...values,
+        'color': color.hex
+    })
+}
+
+const handleRatingChange = (priority) => {
+    isChanged = true
+    setValues({
+        ...values,
+        'priority': priority
+    })
+} 
+
+const handleIconChange = (icon) => {
+    setValues({
+        ...values,
+        'icon': icon
+    })
+} */
+

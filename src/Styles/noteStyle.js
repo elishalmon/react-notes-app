@@ -29,18 +29,22 @@ const noteStyle = makeStyles((theme) => ({
         width: '95%',
     },
     title: {
-        margin: theme.spacing(3,1,1)
+        margin: theme.spacing(3,1,1),
+        backgroundColor: 'white'
     },
     body: {
         margin: theme.spacing(2,1),
+        backgroundColor: 'white'
     },
     colorPicker: {
         display: 'flex',
         justifyContent: 'center',
-        margin: theme.spacing(3,2, 3, 3),
+        margin: theme.spacing(2),
     },
-    button: {
-        margin: theme.spacing(1,1,2)
+    buttom: {
+        margin: theme.spacing(2,1,1.5),
+        display: 'flex',
+        justifyContent: 'space-between'
     },
 }));
 

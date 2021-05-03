@@ -10,11 +10,13 @@ export default function Body( { handleChange=null, label, readOnly, style, defau
             label={label}
             multiline
             required
+            margin='dense'
             rows={6}
             defaultValue={defaultValue}
-            InputProps={{
+            inputProps = {{
                 readOnly: readOnly,
-                }}
+                maxlength: 255
+            }}
             variant="outlined"
             name="body"
             onChange = { handleChange }

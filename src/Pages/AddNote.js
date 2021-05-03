@@ -28,6 +28,7 @@ export default function AddNote() {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
+        console.log(JSON.stringify(values))
         await fetch(
             'http://localhost:8080/notes/addNote',
             {
@@ -39,34 +40,26 @@ export default function AddNote() {
         history.push("/notes")
     }
 
-    const handleChange = (event) => {
-        event.preventDefault()
+    const handleChange = (event = null, nameAndValue) => {
+        let name = '';
+        let value = '';
+        if(event !== null){
+            event.preventDefault()
+            name = event.target.name;
+            value = event.target.value;
+        }
+        else {
+            name = nameAndValue[0];
+            value = nameAndValue[1]
+        }
         setValues({
             ...values,
-            [event.target.name]: event.target.value
+            [name]: value
         });
+        console.log(values)
     }
 
-    const handleColorChange = (color) => {
-        setValues({
-            ...values,
-            'color': color.hex
-        })
-    }
-
-    const handleRatingChange = (priority) => {
-        setValues({
-            ...values,
-            'priority': priority
-        })
-    } 
-
-    const handleIconChange = (icon) => {
-        setValues({
-            ...values,
-            'icon': icon
-        })
-    }
+    
 
     return(
         <Container component="main" maxWidth="xs">
@@ -81,13 +74,13 @@ export default function AddNote() {
                         <StarsRating 
                             startValue = {values.priority} 
                             readOnly={false}
-                            handleChange = {handleRatingChange}
+                            handleChange = {handleChange}
                         />
                     </div>
                     <div >
                         <IconPicker 
                             startValue={values.icon}
-                            handleChange={handleIconChange}
+                            handleChange={handleChange}
                         />
                     </div>
                 </div>
@@ -107,9 +100,9 @@ export default function AddNote() {
                         defaultValue={values.body}
                     />
                     <div className={classes.colorPicker}>
-                        <ColorPicker handleChange = {handleColorChange}/>
+                        <ColorPicker handleChange = {handleChange}/>
                     </div>
-                    <div className={classes.button}>
+                    <div className={classes.buttom}>
                         <Button
                             fullWidth
                             type="submit"
@@ -126,3 +119,31 @@ export default function AddNote() {
         </Container>
     )
 }
+
+/*const handleChange = (event) => {
+        event.preventDefault()
+        setValues({
+            ...values,
+            [event.target.name]: event.target.value
+        });
+    }
+    const handleColorChange = (color) => {
+        setValues({
+            ...values,
+            'color': color.hex
+        })
+    }
+
+    const handleRatingChange = (priority) => {
+        setValues({
+            ...values,
+            'priority': priority
+        })
+    } 
+
+    const handleIconChange = (icon) => {
+        setValues({
+            ...values,
+            'icon': icon
+        })
+    }*/

@@ -6,7 +6,7 @@ export default function ColorPicker({handleChange}) {
 
     return(
         <CirclePicker 
-            onChange={ (color) => handleChange(color) }
+            onChange={ (color) => handleChange(null, ['color', color.hex]) }
             circleSize={27}
             circleSpacing={15}
             name="color"

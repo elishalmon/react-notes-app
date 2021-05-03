@@ -7,6 +7,7 @@ import Title from '../Components/Title';
 import Body from '../Components/Body';
 import EditIcon from '@material-ui/icons/Edit';
 import StarsRating from '../Components/StarsRating';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 export default function ViewNote() {
 
@@ -46,7 +47,16 @@ export default function ViewNote() {
                         style={classes.body}
                         defaultValue={body}
                     />
-                    <div className={classes.button} style={{display: 'flex', alignSelf: 'flex-end'}}>
+                    {/*<div className={classes.buttom} style={{display: 'flex', alignSelf: 'flex-end'}}>*/}
+                    <div className={classes.buttom} >
+                        <Button
+                            onClick={()=> history.push('/notes')}
+                            variant="contained"
+                            color="primary"
+                            startIcon={<ArrowBackIcon />}
+                        >
+                            Back
+                        </Button> 
                         <Button
                             onClick={()=> history.push(`/notes/edit-note/${id}`)}
                             color="primary"

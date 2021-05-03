@@ -10,11 +10,12 @@ export default function Title({ handleChange=null, label, readOnly, style, defau
             variant = "outlined"
             name = "title"
             required
+            margin='dense'
             defaultValue = { defaultValue }
             onChange = { handleChange }
-            InputProps = {{
+            inputProps = {{
                 readOnly: readOnly,
-                maxLength: 20
+                maxlength: 18
             }}
         />
     )

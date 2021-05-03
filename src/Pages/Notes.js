@@ -8,6 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import notesStyle from '../Styles/notesStyle';
 import Box from '@material-ui/core/Box';
 import StarsRating from '../Components/StarsRating';
+import { useSelector, useDispatch } from 'react-redux';
+import fetchNotes from '../redux/actions/notesAction';
+
 
 export default function Notes() {
 
@@ -62,6 +65,7 @@ export default function Notes() {
         loadNotes,
         []
     )
+    
 
     return(
             <div className={classes.main}>
@@ -78,21 +82,22 @@ export default function Notes() {
                         <Button
                             className={classes.button} 
                             fullWidth 
-                            onClick={ () => handleClick(item) }>
+                            onClick={ () => handleClick(item) }
+                            classes = {{label: classes.label}}
+                        >
                             <div className={classes.top}>
                                 <Typography >
                                     <Box
                                         fontWeight={ item.read ? 100 : 1000 }
                                         fontSize={20}
                                         fontStyle="normal"
-                                        fontFamily="sans-serif"
+                                        fontFamily="Tahoma"
                                         letterSpacing={3}
                                     >
                                         {item.title}
                                     </Box>
                                 </Typography>
                                 <StarsRating 
-                                    className={classes.stars}
                                     readOnly={true} 
                                     startValue={item.priority} 
                                     size={''}
@@ -122,4 +127,4 @@ export default function Notes() {
             </div>
     )
 }
-               
+        

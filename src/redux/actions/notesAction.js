@@ -11,7 +11,7 @@ export function setNotes(notes) {
 export default function fetchNotes() {
     return async function (dispatch) {
         const response = await fetch(
-            `http://localhost:8080/user/getNotes?id=${41}`,
+            `http://localhost:8080/user/getNotes?id=${208}`,
             {
                 method: 'GET',
                 headers: {

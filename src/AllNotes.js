@@ -5,11 +5,11 @@ import fetchNotes from './redux/actions/notesAction';
 
 export default function AllNotes() {
 
-    const notes = useSelector((state) => state.notes)
+    const notes = useSelector((state) => state.notes.notes)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if( !notes ) {
+        if( notes.length === 0 ) {
             dispatch(fetchNotes())
         }
     }, [notes])

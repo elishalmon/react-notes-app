@@ -4,7 +4,7 @@ import { findByLabelText } from '@testing-library/dom';
 
 const notesStyle = makeStyles((theme) => ({
     main: {
-        margin: theme.spacing(10, 10),
+        margin: theme.spacing(5, 5, 15),
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
@@ -12,9 +12,10 @@ const notesStyle = makeStyles((theme) => ({
     item: {
         width: '30%',
         margin: theme.spacing(3, 2),
-        border: 'solid 4px',
-        borderRadius: '10%',
+        border: 'solid 5px',
+        borderRadius: '0%',
         display: 'flex',
+        backgroundColor: ''
     },
     top: {
         display: 'flex',
@@ -28,13 +29,16 @@ const notesStyle = makeStyles((theme) => ({
         flexDirection: 'column'
     },
     icon: {
-        margin: theme.spacing(1)
+        margin: theme.spacing(1.5)
     },
     button: {
         height: '100%',
     },
+    label: {
+        height: '100%'
+    },
     stars: {
-        alignSelf: 'center'
+        textAlign: 'center'
     }
 }));
 

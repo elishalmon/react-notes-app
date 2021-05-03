@@ -43,12 +43,13 @@ export default function Login() {
 
     const handleSubmit = async (values) => {
         const response = await fetch(
-            `http://localhost:8080/user/getUserLogin?email=${values.email}&password=${values.password}`,
+            'http://localhost:8080/user/getUserLogin',
             {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify(values),
             }
         )
         if(response.status === 403){
