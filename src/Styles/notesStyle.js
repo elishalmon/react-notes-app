@@ -1,6 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { findByLabelText } from '@testing-library/dom';
-
 
 const notesStyle = makeStyles((theme) => ({
     main: {
@@ -8,6 +6,7 @@ const notesStyle = makeStyles((theme) => ({
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
+        height: '100%'
     },
     item: {
         width: '30%',
@@ -39,7 +38,11 @@ const notesStyle = makeStyles((theme) => ({
     },
     stars: {
         textAlign: 'center'
-    }
+    },
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+      },
 }));
 
 export default notesStyle;

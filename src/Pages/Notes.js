@@ -9,7 +9,9 @@ import notesStyle from '../Styles/notesStyle';
 import Box from '@material-ui/core/Box';
 import StarsRating from '../Components/StarsRating';
 import { useSelector, useDispatch } from 'react-redux';
-import fetchNotes from '../redux/actions/notesAction';
+import fetchNotes, { setNotes } from '../redux/actions/notesAction';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 export default function Notes() {
@@ -66,7 +68,6 @@ export default function Notes() {
         []
     )
     
-
     return(
             <div className={classes.main}>
             {
@@ -127,4 +128,3 @@ export default function Notes() {
             </div>
     )
 }
-        

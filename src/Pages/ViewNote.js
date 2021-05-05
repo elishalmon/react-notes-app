@@ -1,5 +1,7 @@
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux'; 
 import Paper from '@material-ui/core/Paper';
 import noteStyle from '../Styles/noteStyle';
 import Container from '@material-ui/core/Container';
@@ -13,8 +15,11 @@ export default function ViewNote() {
 
     const classes = noteStyle()
     const history = useHistory()
-    const { id, title, body, color, priority, icon } = JSON.parse(localStorage.getItem('note'))
+    const params = useParams()
 
+    //const { id, title, body, color, priority, icon } = JSON.parse(localStorage.getItem('note'))
+    const { id, title, body, color, priority, icon } = useSelector((state) => state.notes.notes)[params.noteId];
+    
     return(
         <Container component="main" maxWidth="xs">
             <Paper 
@@ -47,11 +52,10 @@ export default function ViewNote() {
                         style={classes.body}
                         defaultValue={body}
                     />
-                    {/*<div className={classes.buttom} style={{display: 'flex', alignSelf: 'flex-end'}}>*/}
                     <div className={classes.buttom} >
                         <Button
                             onClick={()=> history.push('/notes')}
-                            variant="contained"
+                            variant="outlined"
                             color="primary"
                             startIcon={<ArrowBackIcon />}
                         >

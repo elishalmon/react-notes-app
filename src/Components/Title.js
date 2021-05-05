@@ -15,7 +15,7 @@ export default function Title({ handleChange=null, label, readOnly, style, defau
             onChange = { handleChange }
             inputProps = {{
                 readOnly: readOnly,
-                maxlength: 18
+                maxlength: 20
             }}
         />
     )

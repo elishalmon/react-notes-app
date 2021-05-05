@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateNoteOnServer } from '../redux/actions/notesAction';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router';
+import { useParams } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import noteStyle from '../Styles/noteStyle';
 import Container from '@material-ui/core/Container';
@@ -10,32 +13,28 @@ import Body from '../Components/Body';
 import SaveIcon from '@material-ui/icons/Save';
 import StarsRating from '../Components/StarsRating';
 import IconPicker from '../Components/IconPicker';
-import { useSelector } from 'react-redux';
 
 var isChanged = false;
 
 export default function EditNote() {
 
-    const classes = noteStyle()
-    const history = useHistory()
-    
-    const [ values, setValues ] = useState(JSON.parse(localStorage.getItem('note')))
+    const classes = noteStyle();
+    const history = useHistory();
+    const params = useParams();
 
-    const handleSubmit = async (event) => {
+    const [ values, setValues ] = useState(useSelector((state) => state.notes.notes)[params.noteId])
+    //const [ values, setValues ] = useState(JSON.parse(localStorage.getItem('note')))
+
+    const dispatch = useDispatch();
+
+    const handleSubmit = (event) => {
         event.preventDefault()
         if(isChanged === true){
             const updatedValues = {...values, read: false}
-            await fetch(
-            'http://localhost:8080/notes/updateNote',
-            {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedValues),
-            }
-            )
+            dispatch(updateNoteOnServer(updatedValues))
         }
-        localStorage.removeItem('note')
-        history.push("/notes")
+        //localStorage.removeItem('note');
+        history.push("/notes");
     }
 
     const handleChange = (event = null, nameAndValue) => {
@@ -121,26 +120,21 @@ export default function EditNote() {
     )
 }
 
-/* const handleColorChange = (color) => {
-    isChanged = true
-    setValues({
-        ...values,
-        'color': color.hex
-    })
-}
-
-const handleRatingChange = (priority) => {
-    isChanged = true
-    setValues({
-        ...values,
-        'priority': priority
-    })
-} 
-
-const handleIconChange = (icon) => {
-    setValues({
-        ...values,
-        'icon': icon
-    })
-} */
-
+/*
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        if(isChanged === true){
+            const updatedValues = {...values, read: false}
+            await fetch(
+            'http://localhost:8080/notes/updateNote',
+            {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedValues),
+            }
+            )
+        }
+        localStorage.removeItem('note');
+        history.push("/notes");
+    }
+*/

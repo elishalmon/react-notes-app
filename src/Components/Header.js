@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import headerStyle from '../Styles/headerStyle';
-import { useHistory } from 'react-router-dom'; 
+import { useHistory, Redirect } from 'react-router-dom'; 
 
 
 export default function Header() {
@@ -38,6 +38,7 @@ export default function Header() {
                     color="inherit" 
                     className={classes.button}
                     onClick={()=> history.push('/logout')}
+                    //onClick = {()=> <Redirect to='/logout' />}
                 >
                     Logout
                 </Button>

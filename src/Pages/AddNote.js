@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { addNoteToServer } from '../redux/actions/notesAction';
+import { useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router';
 import Paper from '@material-ui/core/Paper';
@@ -26,17 +28,11 @@ export default function AddNote() {
         user: JSON.parse(localStorage.getItem('user')),
     })
 
+    const dispatch = useDispatch()
+
     const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log(JSON.stringify(values))
-        await fetch(
-            'http://localhost:8080/notes/addNote',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(values),
-            }
-        )
+        dispatch(addNoteToServer(values))
         history.push("/notes")
     }
 
@@ -56,10 +52,7 @@ export default function AddNote() {
             ...values,
             [name]: value
         });
-        console.log(values)
     }
-
-    
 
     return(
         <Container component="main" maxWidth="xs">
@@ -120,30 +113,19 @@ export default function AddNote() {
     )
 }
 
-/*const handleChange = (event) => {
+
+/*
+    const handleSubmit = async (event) => {
         event.preventDefault()
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value
-        });
+        console.log(JSON.stringify(values))
+        await fetch(
+            'http://localhost:8080/notes/addNote',
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(values),
+            }
+        )
+        history.push("/notes")
     }
-    const handleColorChange = (color) => {
-        setValues({
-            ...values,
-            'color': color.hex
-        })
-    }
-
-    const handleRatingChange = (priority) => {
-        setValues({
-            ...values,
-            'priority': priority
-        })
-    } 
-
-    const handleIconChange = (icon) => {
-        setValues({
-            ...values,
-            'icon': icon
-        })
-    }*/
+    */

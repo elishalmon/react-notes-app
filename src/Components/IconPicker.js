@@ -23,7 +23,7 @@ export default function IconPicker({ startValue, handleChange=null}) {
     return(
         <Select
           labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          id=""
           value={icon}
           onChange={onChange}
         >

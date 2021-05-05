@@ -6,14 +6,10 @@ const headerStyle = makeStyles((theme) => ({
       },
       main: {
           display: 'flex',
-          justifyContent: 'space-between'
-    
-      },
-      menuButton: {
-        marginRight: theme.spacing(2),
+          justifyContent: 'space-between',
       },
       button: {
-          margin: theme.spacing(2,5,2,1)
+          margin: theme.spacing(1,5,1,1)
       },
 }));
 
