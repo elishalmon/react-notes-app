@@ -10,13 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import notesStyle from '../Styles/notesStyle';
 import Box from '@material-ui/core/Box';
 import StarsRating from '../Components/StarsRating';
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function AllNotes() {
  
-    //const [notesList, setNotesList] = useState(useSelector((state) => state.notes.notes))
-    //const [ isLoading, setIsLoading ] = useState(false)
+    const [ loaded, setLoaded ] = useState(false)
     const notesList = useSelector((state) => state.notes.notes)
     const dispatch = useDispatch();
     const classes = notesStyle();
@@ -40,16 +37,17 @@ export default function AllNotes() {
     }
 
     useEffect(() => {
-        if(Object.keys(notesList).length === 0) {
+        if(Object.keys(notesList).length === 0 && loaded === false) {
             dispatch(fetchNotes())
+            setLoaded(true)
         }
     }, [notesList])
 
     return(
         <div className={classes.main}>
         {
-            Object.keys(notesList).length !== 0 ?
-        
+            Object.keys(notesList).length !== 0 ?  
+
             Object.values(notesList).map( (item) => {
             return(
                 <Paper 
@@ -64,12 +62,11 @@ export default function AllNotes() {
                         classes = {{label: classes.label}}
                     >
                         <div className={classes.top}>
-                            <Typography >
+                            <Typography>
                                 <Box
-                                    fontWeight={ item.read ? 100 : 1000 }
-                                    fontSize={20}
-                                    fontStyle="normal"
-                                    letterSpacing={2}
+                                    fontWeight={ item.read ? 300 : 1000 }
+                                    fontSize={24}
+                                    letterSpacing={1}
                                 >
                                     {item.title}
                                 </Box>
@@ -120,75 +117,12 @@ export default function AllNotes() {
                 onClick={()=> history.push("/notes/add-note")}
                 style = {{marginTop: '50px'}}
             >
-                add your first note
+                Add your first note
             </Button> 
             </div>
         }
         </div>
     )
 }
-
-/*
- return(
-        <div className={classes.main}>
-        {
-            Object.keys(notesList).length !== 0 ?
-        
-            Object.values(notesList).map( (item) => {
-            return(
-                <Paper 
-                    className={classes.item} 
-                    elevation={9} 
-                    style={{borderColor: item.color}}
-                >
-                    <Button
-                        className={classes.button} 
-                        fullWidth 
-                        onClick={ () => handleClick(item) }
-                        classes = {{label: classes.label}}
-                    >
-                        <div className={classes.top}>
-                            <Typography >
-                                <Box
-                                    fontWeight={ item.read ? 100 : 1000 }
-                                    fontSize={20}
-                                    fontStyle="normal"
-                                    fontFamily="Tahoma"
-                                    letterSpacing={2}
-                                >
-                                    {item.title}
-                                </Box>
-                            </Typography>
-                            <StarsRating 
-                                readOnly={true} 
-                                startValue={item.priority} 
-                                size={''}
-                            />
-                        </div>
-                    </Button>
-                    <div className={classes.buttom}>
-                        <div className={classes.icon}>
-                            <i class={item.icon}></i>
-                        </div>
-                        <IconButton 
-                            className={classes.delete}  
-                            aria-label="delete" 
-                            onClick = { () => handleDelete(item) }
-                        >
-                            <DeleteIcon />
-                        </IconButton>
-                    </div>
-                </Paper>
-                )
-            })
-            :
-            <Typography variant='h1'>
-                 You have to add notes!
-            </Typography>    
-        }
-        </div>
-    )   
-*/
-    
     
     

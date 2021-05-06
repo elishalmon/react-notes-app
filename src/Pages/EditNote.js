@@ -111,7 +111,7 @@ export default function EditNote() {
                             className="submit"
                             startIcon={<SaveIcon />}
                         >
-                            save changes
+                            Save Changes
                         </Button> 
                     </div>
                 </form>
@@ -119,22 +119,3 @@ export default function EditNote() {
         </Container>
     )
 }
-
-/*
-    const handleSubmit = async (event) => {
-        event.preventDefault()
-        if(isChanged === true){
-            const updatedValues = {...values, read: false}
-            await fetch(
-            'http://localhost:8080/notes/updateNote',
-            {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedValues),
-            }
-            )
-        }
-        localStorage.removeItem('note');
-        history.push("/notes");
-    }
-*/

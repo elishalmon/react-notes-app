@@ -22,7 +22,7 @@ export default function AddNote() {
         id: 0,
         title: '',
         body: '',
-        color: '#3f50b5',
+        color: '#3b5998',
         priority: 1,
         icon: 'fas fa-camera fa-2x',
         user: JSON.parse(localStorage.getItem('user')),
@@ -112,20 +112,3 @@ export default function AddNote() {
         </Container>
     )
 }
-
-
-/*
-    const handleSubmit = async (event) => {
-        event.preventDefault()
-        console.log(JSON.stringify(values))
-        await fetch(
-            'http://localhost:8080/notes/addNote',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(values),
-            }
-        )
-        history.push("/notes")
-    }
-    */

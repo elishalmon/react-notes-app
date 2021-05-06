@@ -24,8 +24,8 @@ export function fecthUser (values) {
             history.push('/login');
         }
         else{*/
-            const user = await response.json();
-            dispatch(setUser(user))
+        const user = await response.json();
+        dispatch(setUser(user))
         
     }
     

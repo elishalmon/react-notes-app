@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const notesStyle = makeStyles((theme) => ({
     main: {
-        margin: theme.spacing(5, 5, 15),
+        margin: theme.spacing(10, 5, 15),
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
@@ -10,7 +10,7 @@ const notesStyle = makeStyles((theme) => ({
     },
     item: {
         width: '30%',
-        margin: theme.spacing(3, 2),
+        margin: theme.spacing(2, 2),
         border: 'solid 5px',
         borderRadius: '0%',
         display: 'flex',

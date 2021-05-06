@@ -1,13 +1,11 @@
 import './App.css';
-import Login from './Components/Login';
+import Login from './Pages/Login';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
-import Notes from './Pages/Notes';
 import Header from './Components/Header';
 import AllNotes from './Pages/AllNotes';
 import ProtectedRoute from './ProtectedRouts';
 import LandingPage from './Pages/LandingPage';
 import Logout from './Components/Logout';
-import Footer from './Components/Footer';
 import AddNote from './Pages/AddNote';
 import ViewNote from './Pages/ViewNote';
 import EditNote from './Pages/EditNote';
@@ -27,7 +25,6 @@ function App() {
               <Switch>
                 { !(localStorage.getItem("isLoggedIn")) && <Route exact path="/login" component={Login} /> }
                 <ProtectedRoute exact path="/" component={LandingPage}/>
-                {/*<ProtectedRoute exact path="/notes" component={Notes}/>*/}
                 <ProtectedRoute exact path="/notes" component={AllNotes}/>
                 <ProtectedRoute exact path="/notes/add-note" component={AddNote} />
                 <ProtectedRoute exact path="/notes/view/:noteId" component={ViewNote} />   
@@ -35,7 +32,6 @@ function App() {
                 <ProtectedRoute exact path='/logout' component={Logout} />
                 <Route path='*' component={() => <Redirect to='/' /> }/>
               </Switch>
-            {/*<Footer />*/}
           </div>
         </ThemeProvider>
       </BrowserRouter>
@@ -46,7 +42,20 @@ export default App;
 
 
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#3b5998'
+    }
+  },
+  overrides: {
+    MuiButton: {
+      root: {
+          textTransform: 'none',
+          fontSize: '15px'
+      }
+    },
+  },
   typography: {
-    fontFamily: ['"Raleway"', 'Open Sans'].join(','),
+    fontFamily: ['"Roboto"', 'Open Sans'].join(','),
    }
  })
