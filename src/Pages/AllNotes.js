@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import {fetchNotes, deleteNoteFromServer, updateNoteOnServer } from '../redux/actions/notesAction';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -10,17 +9,28 @@ import Typography from '@material-ui/core/Typography';
 import notesStyle from '../Styles/notesStyle';
 import Box from '@material-ui/core/Box';
 import StarsRating from '../Components/StarsRating';
+import { getNotesAsync, updateNoteAsync, deleteNoteAsync, selectAllNotes } from '../redux/notesSlice';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 export default function AllNotes() {
- 
-    const [ loaded, setLoaded ] = useState(false)
-    const notesList = useSelector((state) => state.notes.notes)
+
+    const notesList = useSelector(selectAllNotes);
+    const notesStatus = useSelector(state => state.notes.status);
+
     const dispatch = useDispatch();
     const classes = notesStyle();
     const history = useHistory();
 
-    const handleDelete = (item) => {
-        dispatch(deleteNoteFromServer(item.id))
+    useEffect(() => {
+        if(notesStatus === 'beforeLoad') {
+            dispatch(getNotesAsync());
+        }
+    }, [dispatch, notesStatus]);
+
+    const handleDelete = (note) => {
+        dispatch(deleteNoteAsync(note.id))
     }
 
     const handleClick = (note) => {
@@ -28,27 +38,23 @@ export default function AllNotes() {
             note = { ...note, read: true }
             handleUpdateReadFlag(note)
         }
-        //localStorage.setItem('note', JSON.stringify(note))
         history.push(`/notes/view/${note.id}`)
     }
 
     const handleUpdateReadFlag = (note) => {
-        dispatch(updateNoteOnServer(note))
+        dispatch(updateNoteAsync(note))
     }
-
-    useEffect(() => {
-        if(Object.keys(notesList).length === 0 && loaded === false) {
-            dispatch(fetchNotes())
-            setLoaded(true)
-        }
-    }, [notesList])
 
     return(
         <div className={classes.main}>
         {
-            Object.keys(notesList).length !== 0 ?  
-
-            Object.values(notesList).map( (item) => {
+            notesStatus === 'loading' ?  
+            <Backdrop className={classes.backdrop} open={true}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            :
+            notesList.length !== 0 ?
+            notesList.map( (item) => {
             return(
                 <Paper 
                     className={classes.item} 

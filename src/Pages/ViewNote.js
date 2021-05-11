@@ -10,6 +10,7 @@ import Body from '../Components/Body';
 import EditIcon from '@material-ui/icons/Edit';
 import StarsRating from '../Components/StarsRating';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { selectNoteById } from '../redux/notesSlice';
 
 export default function ViewNote() {
 
@@ -17,9 +18,8 @@ export default function ViewNote() {
     const history = useHistory()
     const params = useParams()
 
-    //const { id, title, body, color, priority, icon } = JSON.parse(localStorage.getItem('note'))
-    const { id, title, body, color, priority, icon } = useSelector((state) => state.notes.notes)[params.noteId];
-    
+    const { id, title, body, color, priority, icon } = useSelector(state => selectNoteById(state, params.noteId));
+
     return(
         <Container component="main" maxWidth="xs">
             <Paper 

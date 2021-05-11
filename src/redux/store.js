@@ -1,13 +1,8 @@
-import { createStore, applyMiddleware } from 'redux';
-import ReduxThunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import reducer from './reducers/index';
+import { configureStore } from '@reduxjs/toolkit';
+import notesReducer from './notesSlice'; 
 
-const store = createStore(
-    reducer,
-    composeWithDevTools(
-        applyMiddleware(ReduxThunk)
-    )
-)
-
-export default store;
+export default configureStore({
+    reducer: {
+        notes: notesReducer,
+    },
+});

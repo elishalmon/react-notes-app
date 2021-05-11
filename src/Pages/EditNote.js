@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateNoteOnServer } from '../redux/actions/notesAction';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
@@ -13,6 +12,8 @@ import Body from '../Components/Body';
 import SaveIcon from '@material-ui/icons/Save';
 import StarsRating from '../Components/StarsRating';
 import IconPicker from '../Components/IconPicker';
+import { selectNoteById, updateNoteAsync } from '../redux/notesSlice';
+
 
 var isChanged = false;
 
@@ -22,8 +23,7 @@ export default function EditNote() {
     const history = useHistory();
     const params = useParams();
 
-    const [ values, setValues ] = useState(useSelector((state) => state.notes.notes)[params.noteId])
-    //const [ values, setValues ] = useState(JSON.parse(localStorage.getItem('note')))
+    const [ values, setValues ] = useState(useSelector(state => selectNoteById(state, params.noteId)));
 
     const dispatch = useDispatch();
 
@@ -31,9 +31,8 @@ export default function EditNote() {
         event.preventDefault()
         if(isChanged === true){
             const updatedValues = {...values, read: false}
-            dispatch(updateNoteOnServer(updatedValues))
+            dispatch(updateNoteAsync(updatedValues))
         }
-        //localStorage.removeItem('note');
         history.push("/notes");
     }
 

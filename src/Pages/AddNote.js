@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { addNoteToServer } from '../redux/actions/notesAction';
 import { useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router';
@@ -12,6 +11,7 @@ import Body from '../Components/Body';
 import AddIcon from '@material-ui/icons/Add';
 import StarsRating from '../Components/StarsRating';
 import IconPicker from '../Components/IconPicker';
+import { addNoteAsync } from '../redux/notesSlice';
 
 export default function AddNote() {
 
@@ -32,7 +32,7 @@ export default function AddNote() {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        dispatch(addNoteToServer(values))
+        dispatch(addNoteAsync(values))
         history.push("/notes")
     }
 
