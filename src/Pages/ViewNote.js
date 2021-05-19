@@ -11,6 +11,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import StarsRating from '../Components/StarsRating';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { selectNoteById } from '../redux/notesSlice';
+import { Redirect } from "react-router-dom";
+
 
 export default function ViewNote() {
 
@@ -18,8 +20,17 @@ export default function ViewNote() {
     const history = useHistory()
     const params = useParams()
 
-    const { id, title, body, color, priority, icon } = useSelector(state => selectNoteById(state, params.noteId));
-
+    //const { id, title, body, color, priority, icon } = useSelector(state => selectNoteById(state, params.noteId));
+    const note = useSelector(state => selectNoteById(state, params.noteId));
+    if( !note ) {
+        return(
+            
+            <Redirect to='/' />
+        )
+    }
+    
+    const { id, title, body, color, priority, icon } = note;
+    
     return(
         <Container component="main" maxWidth="xs">
             <Paper 

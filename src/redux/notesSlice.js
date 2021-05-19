@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
+const getToken = () => {
+    return JSON.parse(localStorage.getItem('user')).token;
+}
 
 export const getNotesAsync = createAsyncThunk(
     'notes/getNotes',
@@ -11,6 +14,7 @@ export const getNotesAsync = createAsyncThunk(
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}`
                 },
             });
             if(response.ok) {
@@ -27,7 +31,10 @@ export const addNoteAsync = createAsyncThunk(
             'http://localhost:8080/notes/addNote',
             {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}` 
+                },
                 body: JSON.stringify(note),
             });
             if(response.ok) {
@@ -44,7 +51,10 @@ export const updateNoteAsync = createAsyncThunk(
             'http://localhost:8080/notes/updateNote',
             {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}` 
+                },
                 body: JSON.stringify(note),
             }
         )
@@ -61,7 +71,11 @@ export const deleteNoteAsync = createAsyncThunk(
         const response = await fetch(
             `http://localhost:8080/notes/deleteNote/${id}`, 
         {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${getToken()}` 
+            },
         });
         if(response.ok) {
             return id;

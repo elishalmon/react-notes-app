@@ -13,6 +13,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import StarsRating from '../Components/StarsRating';
 import IconPicker from '../Components/IconPicker';
 import { selectNoteById, updateNoteAsync } from '../redux/notesSlice';
+import { Redirect } from 'react-router-dom';
 
 
 var isChanged = false;
@@ -23,8 +24,11 @@ export default function EditNote() {
     const history = useHistory();
     const params = useParams();
 
-    const [ values, setValues ] = useState(useSelector(state => selectNoteById(state, params.noteId)));
+    //const [ values, setValues ] = useState(useSelector(state => selectNoteById(state, params.noteId)));
 
+    const note = useSelector(state => selectNoteById(state, params.noteId));
+    const [ values, setValues ] = useState(note);
+    
     const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
@@ -56,7 +60,9 @@ export default function EditNote() {
         console.log(values)
     }
 
-    return(
+    return !note ? (
+        <Redirect to='/' />
+    ) : (
         <Container component="main" maxWidth="xs">
             <Paper 
                 square

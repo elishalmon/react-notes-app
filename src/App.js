@@ -29,7 +29,8 @@ function App() {
                 <ProtectedRoute exact path="/notes/add-note" component={AddNote} />
                 <ProtectedRoute exact path="/notes/view/:noteId" component={ViewNote} />   
                 <ProtectedRoute exact path="/notes/edit-note/:noteId" component={EditNote} />
-                <ProtectedRoute exact path='/logout' component={Logout} />
+                {/*<ProtectedRoute exact path='/logout' component={Logout} />*/}
+                <Route exact path='/logout' component={Logout} />
                 <Route path='*' component={() => <Redirect to='/' /> }/>
               </Switch>
           </div>
