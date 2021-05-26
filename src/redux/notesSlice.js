@@ -6,8 +6,7 @@ const getToken = () => {
 
 export const getNotesAsync = createAsyncThunk(
     'notes/getNotes',
-    async () => {
-        const userId = JSON.parse(localStorage.getItem('user')).id
+    async (userId, {rejectWithValue}) => {
         const response = await fetch(
             `http://localhost:8080/user/getNotes?id=${userId}`,
             {
@@ -16,17 +15,18 @@ export const getNotesAsync = createAsyncThunk(
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${getToken()}`
                 },
-            });
-            if(response.ok) {
-                const notes = await response.json();
-                return notes;
-            }
+        });
+        const data = await response.json();
+        if(response.ok) {
+            return data;
+        }
+        return rejectWithValue(data.message);
     }
 );
 
 export const addNoteAsync = createAsyncThunk(
     'notes/addNote',
-    async (note) => {
+    async (note, {rejectWithValue}) => {
         const response = await fetch(
             'http://localhost:8080/notes/addNote',
             {
@@ -37,16 +37,17 @@ export const addNoteAsync = createAsyncThunk(
                 },
                 body: JSON.stringify(note),
             });
+            const data = await response.json()
             if(response.ok) {
-                const newNote = await response.json()
-                return newNote;
+                return data;
             }
+            return rejectWithValue(data.message ? data.message : data);
     }
 );
 
 export const updateNoteAsync = createAsyncThunk(
     'notes/updateNote',
-    async (note) => {
+    async (note, {rejectWithValue}) => {
         const response = await fetch(
             'http://localhost:8080/notes/updateNote',
             {
@@ -58,16 +59,17 @@ export const updateNoteAsync = createAsyncThunk(
                 body: JSON.stringify(note),
             }
         )
+        const data = await response.json();
         if(response.ok) {
-            const updatedNote = await response.json();
-            return updatedNote;
+            return data;
         }
+        return rejectWithValue(data.message ? data.message : data);
     }
 );
 
 export const deleteNoteAsync = createAsyncThunk(
     'notes/deleteNote',
-    async (id) => {
+    async (id, {rejectWithValue}) => {
         const response = await fetch(
             `http://localhost:8080/notes/deleteNote/${id}`, 
         {
@@ -80,6 +82,8 @@ export const deleteNoteAsync = createAsyncThunk(
         if(response.ok) {
             return id;
         }
+        const data = await response.json();
+        return rejectWithValue(data.message);
     }
 );
 
@@ -89,7 +93,8 @@ const notesAdapter = createEntityAdapter({
 });
 
 const initialState = notesAdapter.getInitialState({
-    status: 'beforeLoad'
+    status: 'beforeLoad',
+    error: ''
 });
 
 const notesSlice = createSlice({
@@ -106,12 +111,20 @@ const notesSlice = createSlice({
         [getNotesAsync.pending] : state => {
             state.status = 'loading';
         },
+        [getNotesAsync.rejected]: (state, action) => {
+            state.status = 'failed';
+            state.error = action.payload;
+        },
         [addNoteAsync.fulfilled]: (state, action) => {
             state.status = 'success';
             notesAdapter.addOne(state, action.payload)
         },
         [addNoteAsync.pending] : state => {
             state.status = 'loading';
+        },
+        [addNoteAsync.rejected] : (state, action) => {
+            state.status = 'failed';
+            state.error = action.payload;
         },
         [updateNoteAsync.fulfilled]: (state, action) => {
             state.status = 'success';
@@ -121,12 +134,20 @@ const notesSlice = createSlice({
         [updateNoteAsync.pending] : state => {
             state.status = 'loading';
         },
+        [updateNoteAsync.rejected] : (state, action) => {
+            state.status = 'failed';
+            state.error = action.payload;
+        },
         [deleteNoteAsync.fulfilled]: (state, action) => {
             state.status = 'success';
             notesAdapter.removeOne(state, action.payload)
         },
         [deleteNoteAsync.pending] : state => {
             state.status = 'loading';
+        },
+        [deleteNoteAsync.rejected]: (state, action) => {
+            state.status = 'failed';
+            state.error = action.payload;
         },
     },
 });

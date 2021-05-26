@@ -1,8 +1,6 @@
 import { Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { resetNotes } from '../redux/notesSlice';
-import { useHistory } from 'react-router';
-
 
 export default function Logout() {
 

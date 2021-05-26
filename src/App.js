@@ -9,6 +9,7 @@ import Logout from './Components/Logout';
 import AddNote from './Pages/AddNote';
 import ViewNote from './Pages/ViewNote';
 import EditNote from './Pages/EditNote';
+import ErrorPage from './Pages/ErrorPage';
 import mainStyle from './Styles/mainStyle'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
@@ -29,6 +30,7 @@ function App() {
                 <ProtectedRoute exact path="/notes/add-note" component={AddNote} />
                 <ProtectedRoute exact path="/notes/view/:noteId" component={ViewNote} />   
                 <ProtectedRoute exact path="/notes/edit-note/:noteId" component={EditNote} />
+                <ProtectedRoute exact path="/error" component={ErrorPage} />
                 {/*<ProtectedRoute exact path='/logout' component={Logout} />*/}
                 <Route exact path='/logout' component={Logout} />
                 <Route path='*' component={() => <Redirect to='/' /> }/>

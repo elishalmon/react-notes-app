@@ -20,11 +20,16 @@ export default function ViewNote() {
     const history = useHistory()
     const params = useParams()
 
-    //const { id, title, body, color, priority, icon } = useSelector(state => selectNoteById(state, params.noteId));
+    const notesStatus = useSelector(state => state.notes.status);
     const note = useSelector(state => selectNoteById(state, params.noteId));
+
+    if(notesStatus === 'failed') {
+        return(
+            <Redirect to='/error' />
+        )
+    }
     if( !note ) {
         return(
-            
             <Redirect to='/' />
         )
     }

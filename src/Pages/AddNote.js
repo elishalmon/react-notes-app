@@ -31,9 +31,9 @@ export default function AddNote() {
     const dispatch = useDispatch()
 
     const handleSubmit = async (event) => {
-        event.preventDefault()
-        dispatch(addNoteAsync(values))
-        history.push("/notes")
+        event.preventDefault();
+        dispatch(addNoteAsync(values));
+        history.push("/notes");
     }
 
     const handleChange = (event = null, nameAndValue) => {

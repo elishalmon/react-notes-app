@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
-import { useHistory } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
 import Typography from '@material-ui/core/Typography';
 import notesStyle from '../Styles/notesStyle';
 import Box from '@material-ui/core/Box';
@@ -18,31 +18,36 @@ export default function AllNotes() {
 
     const notesList = useSelector(selectAllNotes);
     const notesStatus = useSelector(state => state.notes.status);
-
+    
     const dispatch = useDispatch();
     const classes = notesStyle();
     const history = useHistory();
 
     useEffect(() => {
         if(notesStatus === 'beforeLoad') {
-            dispatch(getNotesAsync());
+            const userId = JSON.parse(localStorage.getItem('user')).id
+            dispatch(getNotesAsync(userId));
         }
     }, [dispatch, notesStatus]);
 
+    if(notesStatus === 'failed') {
+        return <Redirect to='error' />
+    }
+
     const handleDelete = (note) => {
-        dispatch(deleteNoteAsync(note.id))
+        dispatch(deleteNoteAsync(note.id));
     }
 
     const handleClick = (note) => {
         if(note.read === false) {
             note = { ...note, read: true }
-            handleUpdateReadFlag(note)
+            handleUpdateReadFlag(note);
         }
         history.push(`/notes/view/${note.id}`)
     }
 
     const handleUpdateReadFlag = (note) => {
-        dispatch(updateNoteAsync(note))
+        dispatch(updateNoteAsync(note));
     }
 
     return(
